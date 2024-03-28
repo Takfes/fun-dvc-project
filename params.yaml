@@ -1,0 +1,47 @@
+volumes:
+  ingested_folder: ./data/ingested
+  ingested_dataset: ingested
+  features_folder: ./data/features
+  features_dataset: features
+  curated_folder: ./data/curated
+  curated_dataset: curated
+
+train:
+  nbr_days_to_keep: 1
+
+tickers:
+  - "AAPL"
+  - "MSFT"
+  - "AMZN"
+  - "GOOGL"
+  - "TSLA"
+  - "META"
+  - "ACMR"
+  - "ARES"
+  - "ARM"
+  - "AVGO"
+  - "CAT"
+  - "CHKP"
+  - "CMG"
+  - "CPNG"
+  - "CRWD"
+  - "DAC"
+  - "DXCM"
+  - "EXEL"
+  - "GM"
+  - "INTU"
+  - "JD"
+  - "LLY"
+  - "MA"
+  - "MELI"
+  - "NBIX"
+  - "NOW"
+  - "PHIN"
+  - "PLTR"
+  - "S"
+  - "SHEL"
+  - "SQ"
+  - "TSM"
+  - "V"
+  - "VRT"
+  - "WIRE"

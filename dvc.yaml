@@ -1,0 +1,38 @@
+stages:
+  get_data:
+    cmd: python src/get_data.py
+    deps:
+      - src/get_data.py
+    params:
+      - tickers
+      - volumes.ingested_folder
+      - volumes.ingested_dataset
+    outs:
+      - data/ingested/ingested.csv
+
+  make_features:
+    cmd: python src/make_features.py
+    deps:
+      - src/make_features.py
+      - data/ingested/ingested.csv
+    params:
+      - volumes.ingested_folder
+      - volumes.ingested_dataset
+      - volumes.features_dataset
+      - volumes.features_dataset
+    outs:
+      - data/features/features.csv
+
+  train:
+    cmd: python src/train.py
+    deps:
+      - src/train.py
+      - data/features/features.csv
+    params:
+      - volumes.features_dataset
+      - volumes.features_dataset
+      - volumes.curated_folder
+      - volumes.curated_dataset
+      - train.nbr_days_to_keep
+    outs:
+      - data/curated/curated.json

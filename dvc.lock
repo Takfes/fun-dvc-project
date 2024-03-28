@@ -1,0 +1,97 @@
+schema: '2.0'
+stages:
+  get_data:
+    cmd: python src/get_data.py
+    deps:
+    - path: src/get_data.py
+      hash: md5
+      md5: f6072db762c97cde3c8b55e17f633aaf
+      size: 746
+    params:
+      params.yaml:
+        tickers:
+        - AAPL
+        - MSFT
+        - AMZN
+        - GOOGL
+        - TSLA
+        - META
+        - ACMR
+        - ARES
+        - ARM
+        - AVGO
+        - CAT
+        - CHKP
+        - CMG
+        - CPNG
+        - CRWD
+        - DAC
+        - DXCM
+        - EXEL
+        - GM
+        - INTU
+        - JD
+        - LLY
+        - MA
+        - MELI
+        - NBIX
+        - NOW
+        - PHIN
+        - PLTR
+        - S
+        - SHEL
+        - SQ
+        - TSM
+        - V
+        - VRT
+        - WIRE
+        volumes.ingested_dataset: ingested
+        volumes.ingested_folder: ./data/ingested
+    outs:
+    - path: data/ingested/ingested.csv
+      hash: md5
+      md5: 160406ac569258eb5b8e2a420d0a1c65
+      size: 451795
+  make_features:
+    cmd: python src/make_features.py
+    deps:
+    - path: data/ingested/ingested.csv
+      hash: md5
+      md5: 160406ac569258eb5b8e2a420d0a1c65
+      size: 451795
+    - path: src/make_features.py
+      hash: md5
+      md5: 16b361872c0ee7d79a770619795f80dc
+      size: 920
+    params:
+      params.yaml:
+        volumes.features_dataset: features
+        volumes.ingested_dataset: ingested
+        volumes.ingested_folder: ./data/ingested
+    outs:
+    - path: data/features/features.csv
+      hash: md5
+      md5: b0d0271edc8298fab3e9a6a3d49e1885
+      size: 1043325
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/features/features.csv
+      hash: md5
+      md5: b0d0271edc8298fab3e9a6a3d49e1885
+      size: 1043325
+    - path: src/train.py
+      hash: md5
+      md5: 39b29935baea01cee3f3caa73213b86c
+      size: 1142
+    params:
+      params.yaml:
+        train.nbr_days_to_keep: 1
+        volumes.curated_dataset: curated
+        volumes.curated_folder: ./data/curated
+        volumes.features_dataset: features
+    outs:
+    - path: data/curated/curated.json
+      hash: md5
+      md5: b3751352277fbcd58b8115bae2fb2bb1
+      size: 807
